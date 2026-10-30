@@ -9,6 +9,50 @@ Mnemosyne Memory Bank 是 Mnemosyne 记忆基础设施中的数据组织与管�
 > **本仓定位：** Memory Bank 的公开架构与数据契约说明。  
 > **实际实现：** 存储、索引、版本和迁移由上游 [`canyueY/mnemosyne`](https://github.com/canyueY/mnemosyne) 统一管理；本仓不另建一套个人长期记忆实现。
 
+> **⚠️ 重点：本仓没有独立记忆库。**  
+> 这里只有架构说明、数据契约与边界文档：**不包含数据库、不启动 Memory Bank 服务、不保存个人数据**。  
+> 真正的记忆库是 Mnemosyne Node 管理的一个 **Memory Bank 数据目录**（例如 `%LOCALAPPDATA%\Mnemosyne Memory Bank`）。
+
+## 本仓与 Mnemosyne 的边界（必读）
+
+| 层 | 实体 | 是否独立存储 | 说明 |
+| --- | --- | --- | --- |
+| 代码 | [`canyueY/mnemosyne`](https://github.com/canyueY/mnemosyne) | 否 | Node / Core / API / SDK |
+| 运行 | Mnemosyne Node | **是，一个 Node 一个数据根** | 进程、配置、事务、任务 |
+| 数据 | Mnemosyne Memory Bank | **是，Node 的物理数据目录** | SQLite、runtime、logs、components |
+| 逻辑 | Personal / Projects / Knowledge / Shared / Public / System | 否，同一数据库内的 Bank | 权限、检索范围、隔离 |
+| 文档 | **本仓** `mnemosyne-memory-bank` | **否** | 架构与数据契约说明，不是运行时 |
+
+### 同一 Node 内
+
+- 不同项目用不同 **Bank**，不复制数据库；
+- 默认检索只查 `personal`；
+- `shared` / `public` 不会被自动带进 `personal`；
+- 需要显式指定 `banks` 才能跨空间检索；
+- 关系、证据、时间仍走同一套记忆生命周期。
+
+### 不同 Node 之间
+
+- 不共享同一个 SQLite；
+- 通过 API / SDK / MCP / 导入导出交换；
+- 同一份认知必须有明确权威来源，不能双写；
+- 跨 Node 联邦按规划放在 2.1+。
+
+推荐形态：
+
+```text
+一个用户
+  └─ 一个 Mnemosyne Node
+       └─ 一个 Memory Bank
+            ├─ personal
+            ├─ projects
+            └─ knowledge
+```
+
+> **一句话：`mnemosyne` 有记忆库，本仓没有独立记忆库。**  
+> 两者逻辑上重合、可以关联，但不应该各自维护一套数据库；  
+> **项目隔离用 Bank，跨设备才用多 Node + 授权互操作。**
+
 它的职责不是替 Agent 思考，也不是负责决定哪些经验一定值得记住，而是为上层记忆服务提供稳定的数据基础：
 
 - 记忆如何存储？
