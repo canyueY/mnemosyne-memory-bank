@@ -677,3 +677,8 @@ Memory Bank 的长期价值，不应该由它保存了多少条记录来衡量�
 
 - [Mnemosyne Core](https://github.com/canyueY/dsh-mnemosyne) — 记忆服务、证据、图式演化与 API。
 - [Mnemosyne Memory Bank](https://github.com/canyueY/dsh-mnemosyne-memory-bank) — 本仓，数据组织与边界说明。
+
+
+---
+
+> **为什么还要开发 Mnemosyne？** [阅读全文 →](WHY_MNEMOSYNE.md)
