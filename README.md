@@ -7,7 +7,7 @@
 Mnemosyne Memory Bank 是 Mnemosyne 记忆基础设施中的数据组织与管理层。
 
 > **本仓定位：** Memory Bank 的公开架构与数据契约说明。  
-> **实际实现：** 存储、索引、版本和迁移由上游 [`canyueY/mnemosyne`](https://github.com/canyueY/dsh-mnemosyne) 统一管理；本仓不另建一套个人长期记忆实现。
+> **实际实现：** 存储、索引、版本和迁移由上游 [`canyueY/dsh-mnemosyne`](https://github.com/canyueY/dsh-mnemosyne) 统一管理；本仓不另建一套个人长期记忆实现。
 
 > **⚠️ 重点：本仓没有独立记忆库。**  
 > 这里只有架构说明、数据契约与边界文档：**不包含数据库、不启动 Memory Bank 服务、不保存个人数据**。  
@@ -17,7 +17,7 @@ Mnemosyne Memory Bank 是 Mnemosyne 记忆基础设施中的数据组织与管�
 
 | 层 | 实体 | 是否独立存储 | 说明 |
 | --- | --- | --- | --- |
-| 代码 | [`canyueY/mnemosyne`](https://github.com/canyueY/dsh-mnemosyne) | 否 | Node / Core / API / SDK |
+| 代码 | [`canyueY/dsh-mnemosyne`](https://github.com/canyueY/dsh-mnemosyne) | 否 | Node / Core / API / SDK |
 | 运行 | Mnemosyne Node | **是，一个 Node 一个数据根** | 进程、配置、事务、任务 |
 | 数据 | Mnemosyne Memory Bank | **是，Node 的物理数据目录** | SQLite、runtime、logs、components |
 | 逻辑 | Personal / Projects / Knowledge / Shared / Public / System | 否，同一数据库内的 Bank | 权限、检索范围、隔离 |
